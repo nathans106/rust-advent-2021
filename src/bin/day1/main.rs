@@ -1,10 +1,11 @@
-use rust_advent_2021::{depth, input};
+use depth::{RateProblem, SlidingRateProblem};
+use rust_advent_2021::{input, day::Day};
+mod depth;
 
 fn main() {
-    let depths = input::parse_vec::<depth::Depth>(&1);
-    let rate = depth::rate(&depths);
-    print!("part 1: {}\n", rate);
-
-    let sliding_rate = depth::sliding_rate(&depths);
-    print!("part 2: {}\n", sliding_rate);
+    let depths =  input::parse_vec::<depth::Depth>(&1);
+    let mut day = Day::new(1, depths);
+    day.add_problem(RateProblem{});
+    day.add_problem(SlidingRateProblem{});
+    day.solve();
 }

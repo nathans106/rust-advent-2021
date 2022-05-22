@@ -4,8 +4,14 @@ use std::path::Path;
 use std::str::FromStr;
 use core::fmt::Debug;
 
+pub type DayId = i8;
 
-pub fn parse_vec<T>(day_num: &i8) -> Vec<T> where <T as FromStr>::Err: Debug, T: std::str::FromStr {
+pub fn parse_strs(day_num: &DayId) -> Vec<String> {
+    let path = format!("./inputs/day{}.txt", day_num);
+    read_lines(&path).unwrap().map(|line|  line.unwrap()).collect()
+}
+
+pub fn parse_vec<T>(day_num: &DayId) -> Vec<T> where <T as FromStr>::Err: Debug, T: std::str::FromStr {
     let path = format!("./inputs/day{}.txt", day_num);
     read_lines(&path).unwrap().map(|line|  line.unwrap().parse::<T>().unwrap()).collect()
 }
