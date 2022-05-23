@@ -1,8 +1,11 @@
-use crate::navigator::{Instruction, Instructions, Direction};
+use crate::navigator::{Direction, Instruction, Instructions};
 use regex::Regex;
 
-pub fn parse_instructions<T: AsRef<str>>(lines: &[T]) -> Instructions{
-    lines.iter().map(|line| parse_instruction(line.as_ref())).collect()
+pub fn parse_instructions<T: AsRef<str>>(lines: &[T]) -> Instructions {
+    lines
+        .iter()
+        .map(|line| parse_instruction(line.as_ref()))
+        .collect()
 }
 
 fn parse_instruction(line: &str) -> Instruction {
@@ -15,8 +18,11 @@ fn parse_instruction(line: &str) -> Instruction {
         "forward" => Direction::Forward,
         "up" => Direction::Up,
         "down" => Direction::Down,
-        &_ => panic!("Unkown direction string")
+        &_ => panic!("Unkown direction string"),
     };
 
-    Instruction{ direction, distance }
+    Instruction {
+        direction,
+        distance,
+    }
 }
