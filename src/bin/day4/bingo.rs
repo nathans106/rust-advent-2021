@@ -1,19 +1,24 @@
 use crate::card::{self, Card};
 
-pub fn play(card_nums: Vec<card::Nums>, calls: &Vec<card::Num>) -> Option<(usize, card::Num)> {
+pub fn play(card_nums: Vec<card::Nums>, calls: &Vec<card::Num>) -> Vec<(usize, card::Num)> {
     let mut cards: Vec<Card> = card_nums.into_iter().map(|nums| Card::new(nums)).collect();
+    let mut winners: Vec<(usize, card::Num)> = vec![];
 
     for call in calls {
         for (i, card_) in cards.iter_mut().enumerate() {
+            if winners.iter().any(|(win_i, _score)| win_i == &i) {
+                continue;
+            }
+
             let has_won = card_.call(call.clone());
             if has_won {
                 let score = card_.score();
-                return Some((i, score));
+                winners.push((i, score));
             }
         }
     }
 
-    return None;
+    return winners;
 }
 
 #[cfg(test)]

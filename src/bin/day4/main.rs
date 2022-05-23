@@ -15,7 +15,18 @@ impl Problem<BingoInput> for BingoProblem {
         input: &BingoInput,
     ) -> Result<i32, rust_advent_2021::problem::ProblemError> {
         let result = bingo::play(input.card_nums.clone(), &input.calls);
-        return Ok(result.unwrap().1.into());
+        return Ok(result.first().unwrap().1.into());
+    }
+}
+
+struct BingoProblem2 {}
+impl Problem<BingoInput> for BingoProblem2 {
+    fn solve(
+        &mut self,
+        input: &BingoInput,
+    ) -> Result<i32, rust_advent_2021::problem::ProblemError> {
+        let result = bingo::play(input.card_nums.clone(), &input.calls);
+        return Ok(result.last().unwrap().1.into());
     }
 }
 
@@ -24,6 +35,7 @@ fn main() {
     let input = parse_input(&lines);
     let mut day = Day::new(4, input);
     day.add_problem(BingoProblem {});
+    day.add_problem(BingoProblem2 {});
     day.solve();
 }
 
