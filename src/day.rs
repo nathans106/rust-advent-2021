@@ -5,7 +5,7 @@ use crate::problem::Problem;
 pub struct Day<InputT> {
     id: i8,
     problems: Vec<Box<dyn Problem<InputT>>>,
-    input: InputT
+    input: InputT,
 }
 
 impl<InputT> Day<InputT> {
@@ -13,14 +13,13 @@ impl<InputT> Day<InputT> {
         Day {
             id: id,
             problems: vec![],
-            input: input
+            input: input,
         }
     }
 
     pub fn add_problem<P: Problem<InputT> + 'static>(&mut self, problem: P) {
         self.problems.push(Box::new(problem));
     }
-
 
     pub fn solve(&mut self) {
         print!("Day {} solving {} problems\n", self.id, self.problems.len());
@@ -35,7 +34,7 @@ impl<InputT> Day<InputT> {
             match result {
                 Ok(value) => {
                     print!("Problem {} succesful! Result {}\n", id, value);
-                },
+                }
                 Err(e) => {
                     print!("Problem {} failed! Error: {}\n", id, e);
                 }
@@ -49,19 +48,16 @@ impl<InputT> Day<InputT> {
 #[cfg(test)]
 mod tests {
 
-use crate::problem::ProblemError;
+    use crate::problem::ProblemError;
 
-use super::*;
+    use super::*;
 
-    struct MockProblem {
-    }
+    struct MockProblem {}
 
     impl Problem<i8> for MockProblem {
         fn solve(&mut self, _input: &i8) -> Result<i32, ProblemError> {
             Ok(5)
         }
-
-
     }
 
     #[test]
@@ -73,7 +69,7 @@ use super::*;
     #[test]
     fn one_problem() {
         let mut day = Day::<i8>::new(3, 9);
-        let problem = MockProblem{};
+        let problem = MockProblem {};
         day.add_problem(problem);
         day.solve();
     }
